@@ -1,15 +1,15 @@
-// `include "gpu_alu.v"
-// `include "gpu_register.v"
-// `include "gpu_warp_scheduler.v"
-// `include "gpu_cmp_unit.v"
-// `include "gpu_decoder.v"
-// `include "gpu_instr_mem.v"
-// `include "gpu_lsu.v"
-// `include "gpu_pc.v"
-// `include "gpu_dmem.v"
-// `include "gpu_reg_wr_src.v"
-// `include "thread_RV_dmux.v"
-// `include "gpu_regwrite_gen.v"
+`include "gpu_alu.v"
+`include "gpu_register.v"
+`include "gpu_warp_scheduler.v"
+`include "gpu_cmp_unit.v"
+`include "gpu_decoder.v"
+`include "gpu_instr_mem.v"
+`include "gpu_lsu.v"
+`include "gpu_pc.v"
+`include "gpu_dmem.v"
+`include "gpu_reg_wr_src.v"
+`include "thread_RV_dmux.v"
+`include "gpu_regwrite_gen.v"
 
 module gpu_top (clk, rst, kernel_start, kernel_done);
 
@@ -213,25 +213,25 @@ module gpu_top (clk, rst, kernel_start, kernel_done);
 endmodule
 
 
-// module tb;
-//     reg clk, rst, kernel_start;
-//     wire kernel_done;
-//     gpu_top dut(.clk(clk), .rst(rst), .kernel_done(kernel_done), .kernel_start(kernel_start));
+module tb;
+    reg clk, rst, kernel_start;
+    wire kernel_done;
+    gpu_top dut(.clk(clk), .rst(rst), .kernel_done(kernel_done), .kernel_start(kernel_start));
 
-//     always #5 clk = ~clk;
+    always #5 clk = ~clk;
 
-//     initial begin
-//         clk= 1'b1;
-//         rst= 1'b0;
-//         kernel_start = 1'b0;
+    initial begin
+        clk= 1'b1;
+        rst= 1'b0;
+        kernel_start = 1'b0;
 
-//         #5
-//         kernel_start = 1'b1;
+        #5
+        kernel_start = 1'b1;
 
-//         #7 rst = ~rst;
+        #7 rst = ~rst;
 
-//         wait(dut.instruction == 32'hc0000000);
-//         #10 $finish;
-//     end
+        wait(dut.instruction == 32'hc0000000);
+        #10 $finish;
+    end
 
-// endmodule
+endmodule
