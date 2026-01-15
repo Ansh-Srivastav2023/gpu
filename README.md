@@ -3,7 +3,7 @@
 A custom-designed, 4-lane SIMD (Single Instruction, Multiple Data) GPU architecture implemented in Verilog. This project demonstrates core GPU principles including parallel execution, warp scheduling with thread masking (divergence handling), and a dedicated Load/Store Unit (LSU).
 
 Overview
------------
+----------------------------
 
 The architecture is built around a **Single Instruction, Multiple Data** execution model. A single instruction is fetched and decoded once, then executed across four parallel lanes. Each lane contains its own ALU and Register File, allowing the processor to handle data-parallel tasks efficiently.
 
@@ -56,7 +56,7 @@ The GPU is divided into several functional blocks:
 Project Structure
 --------------------
 
-
+```python
 ├── assembler/
 │   └── gpu_assembler.py     # Converts .asm to .hex files for IMEM/DMEM
 ├── hex/
@@ -72,6 +72,7 @@ Project Structure
 │   └── ...                  # Other hardware sub-modules
 ├── program.asm              # Sample Assembly code
 └── design.html              # Interactive architecture visualization
+```
 Instruction Set (ISA) Summary
 ---------------------------------
 
@@ -104,18 +105,25 @@ Load the generated `.hex` files into the simulation environment. You can use too
 # Example using Icarus Verilog
 iverilog -o gpu_sim src/*.v
 vvp gpu_sim
+```
+
+## Alternatively
+
+Just change the mode of `make` to executable and run `./make`
+
+```bash
+chmod +x make
+./make
+```
 
 
-3. View Architecture
 
-Open design.html in any modern web browser to view the interactive architecture diagram. It allows you to trace the data flow paths and understand how components are wired.
-
-Data Flow
+## Data Flow
 
 Instruction Fetch: The PC points to IMEM, and the instruction is fetched.
 
-Execution: The Decoder signals ALUs. Lanes read from their respective Register Files, and the ALU result is generated.
+**Execution**: The Decoder signals ALUs. Lanes read from their respective Register Files, and the ALU result is generated.
 
-Memory Access: For LOAD/STORE operations, the LSU uses the ALU results as addresses and manages data movement with DMEM.
+**Memory Access**: For `LOAD/STORE` operations, the `LSU` uses the ALU results as addresses and manages data movement with `gpu_dmem`.
 
-Write-back: The Write-back Mux (gpu_reg_wr_src) selects between ALU results, immediate values, or Memory Load data to update the Register Files.
+**Write-back**: The Write-back Mux (`gpu_reg_wr_src`) selects between ALU results, immediate values, or Memory Load data to update the Register Files.
