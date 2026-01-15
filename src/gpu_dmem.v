@@ -10,7 +10,7 @@ module gpu_dmem(clk, is_load, is_store, addr_bus, data_in, mem_dout);
     reg signed [31:0] dmem [0:1023];
 
     initial begin
-        $readmemh("gpu_dmem.hex", dmem);
+        $readmemh("/media/anx/New_Volume/Importants/Verilog/modifieable_processor/gpu/hex/gpu_dmem.hex", dmem);
     end
 
     assign mem_dout = is_load ? dmem[addr_bus[11:0]] : 32'bz;

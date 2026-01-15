@@ -1,4 +1,5 @@
 import re
+import os
 
 VARS = { 
     "NOP" :     "0000", "nop" :     "0000",
@@ -38,7 +39,10 @@ OTHR = ["NOP", "ADD", "SUB", "MUL", "DIV", "MOV", "MASK", "nop", "add", "sub", "
 
 hex_codes = []
 
-with open('program.asm', 'r') as file:
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+ASM_FILE = os.path.join(BASE_DIR, '..', 'program.asm')
+
+with open(ASM_FILE, 'r') as file:
     for line in file:
         clean_line = line.split(';')[0].split('#')[0].strip()
         
@@ -143,8 +147,17 @@ with open('program.asm', 'r') as file:
                     bin_code += "0000"
                 hex_codes.append(hex(int(bin_code, 2)))
 
-with open('gpu_imem.hex', 'w') as imem:
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+HEX_DIR  = os.path.join(BASE_DIR, '..', 'hex')
+IMEM_HEX = os.path.join(HEX_DIR, 'gpu_imem.hex')
+
+# Ensure hex directory exists
+os.makedirs(HEX_DIR, exist_ok=True)
+
+with open(IMEM_HEX, 'w') as imem:
     imem.write("@00000000\n")
 
-    for line in hex_codes:
-        imem.write(f"{str(line)}\n")
+    for code in hex_codes:
+        imem.write(f"{code}\n")
