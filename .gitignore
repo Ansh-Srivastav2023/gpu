@@ -1,2 +1,4 @@
+# simulation files
+*.wlf
 *.vcd
 *.v.out
