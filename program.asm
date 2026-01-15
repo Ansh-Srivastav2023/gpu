@@ -1,4 +1,9 @@
-ld r1, r2, 23
-li r2, 64
-ld r3, r2, 16
-li r4, 96
+mask 9
+ld r1, r2, 1
+li r3, 42
+li r4, 12
+maskrst
+ld r1, r2, 1
+li r3, 42
+li r4, 12
+end

@@ -69,7 +69,7 @@ module gpu_top (clk, rst, kernel_start, kernel_done);
 
     gpu_pc gpu_pc(.clk(clk), .rst(rst), .pc(pc), .pc_stall(pc_stall), .is_branch(is_branch), .branch_taken(branch_taken), .branch_offset(imm));
 
-    reg_wr_src reg_wr_src (.is_load(is_load),
+    reg_wr_src reg_wr_src (.is_load(is_load), .ld(ld), .li(li), .imm(imm),
                         .thread_sel(thread_sel),
                         .mem_dout(mem_dout),
                         .alu_rlt_lane0(alu_rlt_lane0),

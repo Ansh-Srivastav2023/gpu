@@ -85,6 +85,8 @@ module cmp_ctrl_decoder(
     always @(*) begin
         cmp_lt = 0;
         cmp_eq = 0;
+        ld = 0; 
+        li = 0;
         
         if (opcode == 4'b1001) begin 
             case (rd_cmptype)
@@ -97,7 +99,7 @@ module cmp_ctrl_decoder(
             endcase
         end
 
-        else if(opcode ==  4'b0111) begin
+        if(opcode ==  4'b0111) begin
             case (rs2_ldtype)
                 4'b0001: ld = 1'b1;
                 4'b0010: li = 1'b1;
@@ -189,7 +191,7 @@ module gpu_decoder(
         .rd_cmptype(rd_cmptype),
         .rs2_ldtype(rs2_raw),
         .cmp_lt(cmp_lt),
-        .cmp_eq(cmp_eq)
+        .cmp_eq(cmp_eq), .ld(ld), .li(li)
     );
 
     // 5. Writeback & Control Decoder
