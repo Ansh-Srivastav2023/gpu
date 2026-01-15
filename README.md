@@ -1,4 +1,5 @@
-4-Lane SIMD GPU Architecture
+# 4-Lane SIMD GPU Architecture
+
 A custom-designed, 4-lane SIMD (Single Instruction, Multiple Data) GPU architecture implemented in Verilog. This project demonstrates core GPU principles including parallel execution, warp scheduling with thread masking (divergence handling), and a dedicated Load/Store Unit (LSU).
 
 Overview
