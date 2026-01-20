@@ -7,5 +7,3 @@ cocotb_env
 __pycache__
 sim_build
 *.xml
-*.png
-*.jpg
