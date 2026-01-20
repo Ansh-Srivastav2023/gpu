@@ -22,7 +22,10 @@ module gpu_alu (data1, data2, alu_ctrl, result);
                 result = data1 * data2;
             end
             4'b0100: begin
-                result = data1 / data2;
+                if(data2 == 32'd0)
+                    result = 32'd0;
+                else
+                    result = data1 / data2;
             end
             default: begin
                 result = 'b0;

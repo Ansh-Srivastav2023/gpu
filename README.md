@@ -57,22 +57,39 @@ Project Structure
 --------------------
 
 ```python
-├── assembler/
-│   └── gpu_assembler.py     # Converts .asm to .hex files for IMEM/DMEM
-├── hex/
-│   ├── gpu_dmem.hex         # Initial Data Memory state
-│   └── gpu_imem.hex         # Compiled Instruction Memory
-├── src/
-│   ├── gpu_top.v            # Top-level module (Hardware root)
-│   ├── gpu_alu.v            # Lane Arithmetic Logic Unit
-│   ├── gpu_decoder.v        # Instruction decoder
-│   ├── gpu_warp_scheduler.v # Thread mask and warp control
-│   ├── gpu_lsu.v            # Load/Store interface
-│   ├── gpu_register.v       # Lane Register Files
-│   └── ...                  # Other hardware sub-modules
-├── program.asm              # Sample Assembly code
-└── design.html              # Interactive architecture visualization
+├── assembler               
+│   └── gpu_assembler.py    # Main Python script for the assembler
+├── assemble.sh             # Shell script to execute the assembler
+├── design                  
+│   ├── design.html         
+│   ├── instructions.html   
+│   └── instructions.jpg    
+├── hex                     
+│   ├── gpu_dmem.hex        # Hex file for Data Memory initialization
+│   └── gpu_imem.hex        # Hex file for Instruction Memory initialization
+├── program.asm             # Input assembly test program
+├── README.md               
+├── src                     # Verilog source files for the GPU hardware
+│   ├── gpu_alu.v           
+│   ├── gpu_cmp_unit.v      # Comparator Unit (LT, GT, EQ, etc.)
+│   ├── gpu_decoder.v       # Instruction Decoder (Opcode to control signals)
+│   ├── gpu_dmem.v          
+│   ├── gpu_instr_mem.v     
+│   ├── gpu_interface       
+│   ├── gpu_lsu.v           # Load-Store Unit (Memory read/write logic)
+│   ├── gpu_pc.v            # Program Counter (Fetch address logic)
+│   ├── gpu_register.v      
+│   ├── gpu_regwrite_gen.v  # Logic to generate register write enable signals
+│   ├── gpu_reg_wr_src.v    
+│   ├── gpu_top.v           # Top-level module integrating all GPU components
+│   ├── gpu_warp_scheduler.v # Scheduler managing warps and execution flow
+│   └── thread_RV_dmux.v    
+└── verification            # Directory for testbenches and cocotb verification scripts
+    ├── Makefile           
+    └── test.py            
 ```
+
+
 Instruction Set (ISA) Summary
 ---------------------------------
 
@@ -88,8 +105,11 @@ The GPU supports several instruction classes designed for parallel processing:
 
 Signals completion of the current kernel execution.
 
+![alt text](image.png)
+
 Getting Started
 -------------------
+Note: In case your system fails to install `Cocotb`, make use of `Python environment` to install it.
 
 ### 1\. Assemble the Program
 
@@ -98,24 +118,28 @@ Use the provided Python assembler to convert your assembly source code into hex 
 ```python
 python3 assembler/gpu_assembler.py program.asm
 ```
-### 2\. Run Simulation
 
-Load the generated `.hex` files into the simulation environment. You can use tools like **Icarus Verilog** or **Vivado** to run the testbench:
-```python
-# Example using Icarus Verilog
-iverilog -o gpu_sim src/*.v
-vvp gpu_sim
-```
+### Alternatively
 
-## Alternatively
-
-Just change the mode of `make` to executable and run `./make`
+Just change the mode of `assemble.sh` to executable and run `./assemble.sh`
 
 ```bash
-chmod +x make
-./make
+chmod +x assemble.sh
+./assemble.sh
 ```
 
+### 2\. Cocotb Based Verification
+
+After assembling and extracting the hexcode, run the simulation using `Verilator` integrated with `Cocotb`.
+
+To run this simply run the fillowing command in the terminal.
+
+```python3
+cd verification/
+make SIM=Verilator WAVE=1
+```
+
+This generates `dump.vcd` file in the `gpu` directory.
 
 
 ## Data Flow
@@ -127,3 +151,5 @@ Instruction Fetch: The PC points to IMEM, and the instruction is fetched.
 **Memory Access**: For `LOAD/STORE` operations, the `LSU` uses the ALU results as addresses and manages data movement with `gpu_dmem`.
 
 **Write-back**: The Write-back Mux (`gpu_reg_wr_src`) selects between ALU results, immediate values, or Memory Load data to update the Register Files.
+
+![alt text](image-2.png)
