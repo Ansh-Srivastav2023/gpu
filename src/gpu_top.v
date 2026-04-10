@@ -35,7 +35,6 @@ module gpu_top (clk, rst, kernel_start, kernel_done);
     wire signed [15:0] imm;
     wire signed [31:0] pc;
 
-    // wire [31:0] R0_lane0, R0_lane1, R0_lane2, R0_lane3;
     wire signed [31:0] alu_rlt_lane0, alu_rlt_lane1, alu_rlt_lane2, alu_rlt_lane3;
     wire signed [31:0] result_lane0, result_lane1, result_lane2, result_lane3;
     wire signed [31:0] R1_lane0, R1_lane1, R1_lane2, R1_lane3;
@@ -48,7 +47,6 @@ module gpu_top (clk, rst, kernel_start, kernel_done);
 
     gpu_regwrite_gen regwrite_gen(.regwrite(regwrite),
                         .is_load(is_load),
-                        .is_store(is_store),
                         .thread_sel(thread_sel),
                         .active_mask(active_mask),
                         .regwrite_0(regwrite_0),
@@ -68,10 +66,15 @@ module gpu_top (clk, rst, kernel_start, kernel_done);
                         .RVx_lane2(RVx_lane2),
                         .RVx_lane3(RVx_lane3));
 
-    gpu_pc gpu_pc(.clk(clk), .rst(rst), .pc(pc), .pc_stall(pc_stall), .is_branch(is_branch), .branch_taken(branch_taken), .branch_offset(imm));
+    gpu_pc gpu_pc(.clk(clk), 
+                    .rst(rst), 
+                    .pc(pc), 
+                    .pc_stall(pc_stall), 
+                    .is_branch(is_branch), 
+                    .branch_taken(branch_taken), 
+                    .branch_offset(imm));
 
     reg_wr_src reg_wr_src (.is_load(is_load), .ld(ld), .li(li), .imm(imm),
-                        .thread_sel(thread_sel),
                         .mem_dout(mem_dout),
                         .alu_rlt_lane0(alu_rlt_lane0),
                         .alu_rlt_lane1(alu_rlt_lane1),
@@ -82,7 +85,7 @@ module gpu_top (clk, rst, kernel_start, kernel_done);
                         .result_lane2(result_lane2),
                         .result_lane3(result_lane3));
 
-    gpu_instr_mem gpu_inmem(.instruction(instruction), .pc(pc));
+    gpu_instr_mem gpu_instr_mem(.instruction(instruction), .pc(pc));
 
     gpu_warp_scheduler gpu_warp_sche(.clk(clk),
                         .rst(rst),

@@ -41,7 +41,8 @@ module gpu_cmp_unit_top (R1_lane0, R1_lane1, R1_lane2, R1_lane3,
     output [3:0] cmp_pass;
     output signed [31:0] RV_lane0, RV_lane1, RV_lane2, RV_lane3;
 
-    gpu_cmp_unit gpu_cmp_unit(.R1_lane0(R1_lane0),
+    gpu_cmp_unit gpu_cmp_unit(
+                .R1_lane0(R1_lane0),
                 .R1_lane1(R1_lane1),
                 .R1_lane2(R1_lane2),
                 .R1_lane3(R1_lane3),

@@ -23,7 +23,7 @@ async def gpu_test(dut):
     clock = Clock(dut.clk, 5, unit="ns")
     cocotb.start_soon(clock.start())
 
-    for num in range(10):
+    for num in range(1000):
         logger.info(f"🧪 This is test no. ---> {num + 1}")
 
         dut.kernel_start.value = 1

@@ -1,6 +1,6 @@
-module gpu_regwrite_gen(regwrite, is_load, is_store, thread_sel, active_mask, regwrite_0, regwrite_1, regwrite_2, regwrite_3);
+module gpu_regwrite_gen(regwrite, is_load, thread_sel, active_mask, regwrite_0, regwrite_1, regwrite_2, regwrite_3);
 
-    input regwrite, is_load, is_store;
+    input regwrite, is_load;
     input [1:0] thread_sel;
     input [3:0] active_mask;
     output regwrite_0, regwrite_1, regwrite_2, regwrite_3;

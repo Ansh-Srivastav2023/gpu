@@ -10,8 +10,8 @@ PROJ_ROOT := $(abspath ..)
 
 VERILOG_SOURCES = $(wildcard $(PROJ_ROOT)/src/*.v)
 
-EXTRA_ARGS += --trace --trace-structs
-EXTRA_ARGS += --timing
+EXTRA_ARGS += --trace --trace-structs 
+EXTRA_ARGS += --timing -quiet
 
 WAVES = 1
 

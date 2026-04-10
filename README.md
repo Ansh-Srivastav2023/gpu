@@ -105,7 +105,7 @@ The GPU supports several instruction classes designed for parallel processing:
 
 Signals completion of the current kernel execution.
 
-![alt text](design/image.png)
+![alt text](design/instructions.jpg)
 
 Getting Started
 -------------------
@@ -152,4 +152,4 @@ Instruction Fetch: The PC points to IMEM, and the instruction is fetched.
 
 **Write-back**: The Write-back Mux (`gpu_reg_wr_src`) selects between ALU results, immediate values, or Memory Load data to update the Register Files.
 
-![alt text](design/image copy.png)
+![alt text](design/image2.png)

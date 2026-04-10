@@ -12,18 +12,17 @@ module gpu_reg0 (
 
     reg signed [31:0] thread_reg [0:7];
 
-    assign R1 = thread_reg[rs1];
-    assign R2 = thread_reg[rs2];
+    assign R1 = thread_reg[rs1[2:0]];
+    assign R2 = thread_reg[rs2[2:0]];
 
     integer i;
     always @(posedge clk or negedge rst) begin
         if (~rst) begin
-            thread_reg[0] = 0;
-            for (i = 1; i < 8; i = i + 1)
+            for (i = 0; i < 8; i = i + 1)
                 thread_reg[i] <= 32'b0;
         end
         else if (regwrite) begin
-            thread_reg[rd] <= write_data;
+            thread_reg[rd[2:0]] <= write_data;
         end
     end
 
@@ -43,18 +42,17 @@ module gpu_reg1 (
 
     reg signed [31:0] thread_reg [0:7];
 
-    assign R1 = thread_reg[rs1];
-    assign R2 = thread_reg[rs2];
+    assign R1 = thread_reg[rs1[2:0]];
+    assign R2 = thread_reg[rs2[2:0]];
 
     integer i;
     always @(posedge clk or negedge rst) begin
         if (~rst) begin
-            thread_reg[0] = 1;
-            for (i = 1; i < 8; i = i + 1)
+            for (i = 0; i < 8; i = i + 1)
                 thread_reg[i] <= 32'b0;
         end
         else if (regwrite) begin
-            thread_reg[rd] <= write_data;
+            thread_reg[rd[2:0]] <= write_data;
         end
     end
 
@@ -74,18 +72,17 @@ module gpu_reg2 (
 
     reg signed [31:0] thread_reg [0:7];
 
-    assign R1 = thread_reg[rs1];
-    assign R2 = thread_reg[rs2];
+    assign R1 = thread_reg[rs1[2:0]];
+    assign R2 = thread_reg[rs2[2:0]];
 
     integer i;
     always @(posedge clk or negedge rst) begin
         if (~rst) begin
-            thread_reg[0] = 2;
-            for (i = 1; i < 8; i = i + 1)
+            for (i = 0; i < 8; i = i + 1)
                 thread_reg[i] <= 32'b0;
         end
         else if (regwrite) begin
-            thread_reg[rd] <= write_data;
+            thread_reg[rd[2:0]] <= write_data;
         end
     end
 
@@ -105,18 +102,17 @@ module gpu_reg3 (
 
     reg signed [31:0] thread_reg [0:7];
 
-    assign R1 = thread_reg[rs1];
-    assign R2 = thread_reg[rs2];
+    assign R1 = thread_reg[rs1[2:0]];
+    assign R2 = thread_reg[rs2[2:0]];
 
     integer i;
     always @(posedge clk or negedge rst) begin
         if (~rst) begin
-            thread_reg[0] = 3;
-            for (i = 1; i < 8; i = i + 1)
+            for (i = 0; i < 8; i = i + 1)
                 thread_reg[i] <= 32'b0;
         end
         else if (regwrite) begin
-            thread_reg[rd] <= write_data;
+            thread_reg[rd[2:0]] <= write_data;
         end
     end
 

@@ -2,8 +2,8 @@ module gpu_dmem(clk, is_load, is_store, addr_bus, data_in, mem_dout);
 
     input clk;
     input is_load, is_store;
-    input signed [31:0] data_in;
     input [31:0] addr_bus;
+    input signed [31:0] data_in;
 
     output signed [31:0] mem_dout;
 
@@ -13,17 +13,12 @@ module gpu_dmem(clk, is_load, is_store, addr_bus, data_in, mem_dout);
         $readmemh("/media/anx/New_Volume/Importants/Verilog/modifieable_processor/gpu/hex/gpu_dmem.hex", dmem);
     end
 
-    assign mem_dout = is_load ? dmem[addr_bus[11:0]] : 32'bz;
+    assign mem_dout = is_load ? dmem[addr_bus[9:0]] : 32'b0;
     
     always @(posedge clk) begin
         if(is_store)
-            dmem[addr_bus[11:2]] = data_in;
+            dmem[addr_bus[9:0]] = data_in;
     end
-
-    // initial begin
-    //     #20
-    //     $display("%h", dmem[0]);
-    // end
 
 endmodule
 
