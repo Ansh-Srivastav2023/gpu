@@ -153,3 +153,4 @@ Instruction Fetch: The PC points to IMEM, and the instruction is fetched.
 **Write-back**: The Write-back Mux (`gpu_reg_wr_src`) selects between ALU results, immediate values, or Memory Load data to update the Register Files.
 
 ![alt text](design/image2.png)
+![alt text](test.drawio.png)
